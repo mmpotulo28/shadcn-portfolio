@@ -1,5 +1,9 @@
 // types/index.ts
-// Type definitions for portfolio data
+// Centralized type definitions for portfolio
+
+// ========================================
+// Project Types
+// ========================================
 
 export type ProjectCategory = "personal" | "professional" | "open-source";
 export type ProjectStatus = "live" | "in-development" | "archived";
@@ -36,8 +40,12 @@ export interface Project {
 	image: string;
 	featured: boolean;
 	order: number;
-	company?: string; // For professional projects
+	company?: string;
 }
+
+// ========================================
+// Experience Types
+// ========================================
 
 export interface Experience {
 	id: string;
@@ -45,7 +53,7 @@ export interface Experience {
 	role: string;
 	duration: string;
 	startDate: string;
-	endDate?: string; // undefined for current position
+	endDate?: string;
 	location: string;
 	description: string;
 	responsibilities: string[];
@@ -53,23 +61,36 @@ export interface Experience {
 	technologies: string[];
 }
 
+// ========================================
+// Skills Types
+// ========================================
+
+export type SkillProficiency = "expert" | "advanced" | "intermediate" | "familiar";
+
 export interface Skill {
 	name: string;
 	category: string;
-	proficiency?: "expert" | "advanced" | "intermediate" | "familiar";
+	proficiency?: SkillProficiency;
 	icon?: string;
 }
 
 export interface SkillCategory {
 	name: string;
-	skills: Skill[];
+	description?: string;
+	skills: string[];
 }
+
+// ========================================
+// Education Types
+// ========================================
 
 export interface Education {
 	degree: string;
 	field: string;
 	institution: string;
 	duration: string;
+	startDate: string;
+	endDate: string;
 	focusAreas: string[];
 	capstone?: {
 		title: string;
@@ -77,6 +98,10 @@ export interface Education {
 		technologies: string[];
 	};
 }
+
+// ========================================
+// Contact & Social Types
+// ========================================
 
 export interface SocialLinks {
 	github?: string;
@@ -90,4 +115,29 @@ export interface ContactFormData {
 	email: string;
 	subject: string;
 	message: string;
+}
+
+// ========================================
+// Personal Info Types
+// ========================================
+
+export interface PersonalInfo {
+	name: string;
+	title: string;
+	tagline: string;
+	bio: string;
+	location: string;
+	email: string;
+	social: SocialLinks;
+	image: string;
+}
+
+// ========================================
+// Navigation Types
+// ========================================
+
+export interface NavItem {
+	id: string;
+	label: string;
+	href: string;
 }

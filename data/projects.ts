@@ -244,12 +244,173 @@ export const projects: Project[] = [
 		featured: true,
 		order: 7,
 	},
-	// Add remaining professional projects...
-	// (Following the same pattern)
+	{
+		id: "expo-notifications",
+		title: "Expo Notifications Crash Diagnostics",
+		category: "professional",
+		status: "live",
+		company: "BETSoftware",
+		description: "Production crash investigation and resolution for mobile notifications",
+		challenge:
+			"Critical crashes affecting user experience during notification delivery, with obscure stack traces and intermittent reproduction.",
+		solution: [
+			"Symbolicated crash reports to identify root cause in JS-native bridge",
+			"Traced issue to asynchronous event handling inconsistencies",
+			"Implemented defensive programming patterns to prevent future crashes",
+			"Created reproducible test cases for QA validation",
+		],
+		technologies: [
+			"Expo",
+			"React Native",
+			"JavaScript",
+			"Symbolication",
+			"Stack Trace Analysis",
+		],
+		achievements: [
+			"Identified and resolved root cause within 48 hours",
+			"Reduced notification-related crashes by 95%",
+			"Created detailed Jira documentation for engineering team",
+			"Established crash monitoring best practices",
+		],
+		metrics: {
+			performance: "95% crash reduction",
+			engagement: "App rating improved from 4.2 to 4.7 stars",
+		},
+		links: {},
+		image: "/images/projects/expo-notifications.jpg",
+		featured: false,
+		order: 8,
+	},
+	{
+		id: "proxy-workflow",
+		title: "Linux Proxy Inspection Workflow",
+		category: "professional",
+		status: "live",
+		company: "BETSoftware",
+		description: "Automated proxy inspection system for QA and debugging",
+		challenge:
+			"Manual proxy configuration was time-consuming and error-prone, leading to inconsistent testing environments across the development team.",
+		solution: [
+			"Compared Linux vs Windows setups for mitmproxy-based inspection",
+			"Designed automated startup/teardown scripts for proxy lifecycle",
+			"Implemented audit logging for compliance and debugging",
+			"Created comprehensive documentation for team adoption",
+		],
+		technologies: [
+			"Linux",
+			"mitmproxy",
+			"Bash Scripting",
+			"Network Security",
+			"Certificate Management",
+		],
+		achievements: [
+			"Reduced proxy setup time from 20 minutes to 30 seconds",
+			"Improved debugging reliability through automated logging",
+			"Enabled parallel testing across multiple environments",
+			"Adopted by entire development team",
+		],
+		metrics: {
+			performance: "97% time reduction in setup",
+		},
+		links: {
+			github: "https://github.com/mmpotulo28/proxy-automation",
+		},
+		image: "/images/projects/proxy-workflow.jpg",
+		featured: false,
+		order: 9,
+	},
+	{
+		id: "redis-cache-betsoftware",
+		title: "Redis Cache Implementation",
+		category: "professional",
+		status: "live",
+		company: "BETSoftware",
+		description: "Performance optimization for real-time analytics dashboard",
+		challenge:
+			"Dashboard queries were slow (3-5 seconds) due to complex aggregations on large datasets, impacting user experience and business operations.",
+		solution: [
+			"Implemented Redis caching layer for frequently accessed queries",
+			"Designed cache invalidation strategy based on data freshness requirements",
+			"Optimized query patterns to reduce database load",
+			"Monitored cache hit rates and tuned TTL values",
+		],
+		technologies: [
+			"Redis",
+			"Spring Boot",
+			"PostgreSQL",
+			"Performance Optimization",
+			"Caching Strategies",
+		],
+		achievements: [
+			"Reduced query latency from 3.5s to 400ms (88% improvement)",
+			"Decreased database load by 60%",
+			"Cache hit rate of 85% for dashboard queries",
+			"Successfully handled 10x traffic spike during peak hours",
+		],
+		metrics: {
+			performance: "88% latency reduction",
+			engagement: "User satisfaction improved from 6.8 to 9.2",
+		},
+		links: {},
+		image: "/images/projects/redis-cache.jpg",
+		featured: true,
+		order: 10,
+	},
+	{
+		id: "appsflyer-integration",
+		title: "AppsFlyer Smart Banner Integration",
+		category: "professional",
+		status: "live",
+		company: "BETSoftware",
+		description: "Web-to-app conversion optimization with attribution tracking",
+		challenge:
+			"Low web-to-app conversion rates and lack of visibility into banner performance across different user segments and devices.",
+		solution: [
+			"Integrated AppsFlyer Smart Banners into web application",
+			"Implemented A/B testing for banner variations",
+			"Set up Dynatrace monitoring for performance metrics",
+			"Optimized banner logic for session attribution and user segmentation",
+		],
+		technologies: ["AppsFlyer", "JavaScript", "Dynatrace", "Analytics", "A/B Testing"],
+		achievements: [
+			"Increased web-to-app conversion by 42%",
+			"Reduced page load impact to < 50ms",
+			"Tracked 50,000+ banner impressions and conversions",
+			"Identified high-performing user segments for targeting",
+		],
+		metrics: {
+			engagement: "42% conversion increase",
+			performance: "15,000+ additional app installs in Q1",
+		},
+		links: {},
+		image: "/images/projects/appsflyer.jpg",
+		featured: false,
+		order: 11,
+	},
 ];
 
-// Helper functions
-export const getFeaturedProjects = () => projects.filter((p) => p.featured);
-export const getProjectsByCategory = (category: Project["category"]) =>
+// ========================================
+// Helper Functions
+// ========================================
+
+export const getFeaturedProjects = (): Project[] => projects.filter((p) => p.featured);
+
+export const getProjectsByCategory = (category: Project["category"]): Project[] =>
 	projects.filter((p) => p.category === category);
-export const getProjectById = (id: string) => projects.find((p) => p.id === id);
+
+export const getPersonalProjects = (): Project[] =>
+	projects.filter((p) => p.category === "personal");
+
+export const getProfessionalProjects = (): Project[] =>
+	projects.filter((p) => p.category === "professional");
+
+export const getProjectById = (id: string): Project | undefined =>
+	projects.find((p) => p.id === id);
+
+export const getTechnologies = (): string[] => {
+	const techSet = new Set<string>();
+	projects.forEach((project) => {
+		project.technologies.forEach((tech) => techSet.add(tech));
+	});
+	return Array.from(techSet).sort((a, b) => a.localeCompare(b));
+};
