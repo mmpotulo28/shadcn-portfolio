@@ -288,7 +288,7 @@ import { Card } from "@/components/ui/card";
 
 // 3. Internal imports - utilities/data
 import { cn } from "@/lib/utils";
-import { projects } from "@/data/projects";
+import { projects } from "@/lib/data/projects";
 
 // 4. Types
 interface Props {

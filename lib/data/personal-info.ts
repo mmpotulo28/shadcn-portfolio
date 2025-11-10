@@ -32,25 +32,25 @@ export const personalInfo: PersonalInfo = {
 
 export const aboutHighlights = [
 	{
-		icon: "🎯",
+		icon: "Target",
 		title: "Problem Solver",
 		description:
 			"Reduced critical app crashes by 95% and optimized dashboard queries from 3.5s to 400ms through systematic debugging and performance optimization.",
 	},
 	{
-		icon: "🚀",
+		icon: "Rocket",
 		title: "Innovation Driven",
 		description:
 			"Successfully integrated complex SDKs (Xtremepush, AppsFlyer) supporting 100,000+ users while implementing Redis caching and automated workflows.",
 	},
 	{
-		icon: "🤝",
+		icon: "Users",
 		title: "Team Player",
 		description:
 			"Collaborate effectively with cross-functional teams in Agile environments, mentor junior developers, and contribute to engineering documentation.",
 	},
 	{
-		icon: "📈",
+		icon: "TrendingUp",
 		title: "Impact Focused",
 		description:
 			"Delivered measurable results: 42% conversion increase, 88% latency reduction, and improved app ratings from 4.2 to 4.7 stars.",

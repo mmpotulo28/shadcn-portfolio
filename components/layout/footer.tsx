@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Mail, ArrowUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { socialLinks } from "@/data/personal-info";
+import { socialLinks } from "@/lib/data/personal-info";
 
 export function Footer() {
 	const scrollToTop = () => {
