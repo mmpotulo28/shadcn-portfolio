@@ -4,7 +4,9 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, Calendar, TrendingUp, Circle, Check } from "lucide-react";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { motion, AnimatePresence } from "framer-motion";
+import { Card, CardContent } from "@/components/ui/card";
+import { CardContainer, CardBody, CardItem } from "@/components/ui/3d-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -17,6 +19,7 @@ import {
 } from "@/components/ui/dialog";
 import { projects, getFeaturedProjects, getProjectsByCategory } from "@/lib/data/projects";
 import type { Project } from "@/types";
+import { fadeInUp, staggerContainer, scaleIn } from "@/lib/animations";
 
 const categoryLabels = {
 	all: "All Projects",
@@ -34,216 +37,322 @@ export function Projects() {
 	const featuredProjects = getFeaturedProjects();
 
 	return (
-		<section id="projects" className="py-20 md:py-32">
-			<div className="container mx-auto px-4 sm:px-6 lg:px-8">
-				<div className="max-w-7xl mx-auto space-y-12">
-					{/* Section Header */}
-					<div className="text-center space-y-4">
-						<h2 className="text-3xl sm:text-4xl md:text-5xl font-bold">
-							Featured Projects
-						</h2>
-						<p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-							A showcase of production-grade applications built with modern
-							technologies
-						</p>
-					</div>
+		<>
+			<section id="projects" className="py-20 md:py-32 relative overflow-hidden">
+				{/* Background Pattern */}
+				<div className="absolute inset-0 opacity-30">
+					<div className="absolute inset-0 bg-size-[4rem_4rem] bg-[linear-gradient(rgba(0,0,0,.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,.05)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.05)_1px,transparent_1px)]" />
+				</div>
 
-					{/* Featured Projects - Large Cards */}
-					<div className="space-y-6">
-						<h3 className="text-2xl font-bold">Highlighted Work</h3>
-						<div className="grid md:grid-cols-2 gap-6">
-							{featuredProjects.slice(0, 4).map((project) => (
-								<Card
-									key={project.id}
-									className="group overflow-hidden border-2 hover:border-primary/50 transition-all hover:shadow-xl cursor-pointer"
-									onClick={() => setSelectedProject(project)}>
-									<div className="relative aspect-video overflow-hidden bg-muted">
-										<Image
-											src={project.image}
-											alt={project.title}
-											fill
-											className="object-cover group-hover:scale-105 transition-transform duration-300"
-										/>
-										<div className="absolute top-4 right-4">
-											<Badge className="bg-primary text-primary-foreground">
-												Featured
-											</Badge>
-										</div>
-									</div>
-									<CardHeader className="space-y-3">
-										<div className="space-y-2">
-											<div className="flex items-start justify-between gap-4">
-												<h3 className="text-xl font-bold group-hover:text-primary transition-colors line-clamp-1">
+				<div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+					<motion.div
+						className="max-w-7xl mx-auto space-y-12"
+						initial="hidden"
+						whileInView="visible"
+						viewport={{ once: true, margin: "-100px" }}>
+						{/* Section Header */}
+						<motion.div variants={fadeInUp} className="text-center space-y-4">
+							<h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-linear-to-r from-foreground to-primary">
+								Featured Projects
+							</h2>
+							<p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+								A showcase of production-grade applications built with modern
+								technologies
+							</p>
+						</motion.div>
+
+						{/* Featured Projects - Large Cards */}
+						<motion.div
+							variants={staggerContainer}
+							initial="hidden"
+							whileInView="visible"
+							viewport={{ once: true, margin: "-50px" }}
+							className="space-y-6">
+							<motion.h3 variants={fadeInUp} className="text-2xl font-bold">
+								Highlighted Work
+							</motion.h3>
+							<div className="grid md:grid-cols-2 gap-8">
+								{featuredProjects.slice(0, 4).map((project, index) => (
+									<motion.div
+										key={project.id}
+										variants={scaleIn}
+										custom={index}
+										transition={{ duration: 0.3 }}>
+										<CardContainer className="py-0">
+											<CardBody className="relative group/card w-full h-auto rounded-xl p-6 border border-border hover:border-primary/50 bg-card transition-all duration-300">
+												<CardItem
+													translateZ="50"
+													className="text-xl font-bold text-foreground group-hover/card:text-primary transition-colors w-full">
 													{project.title}
-												</h3>
-												{project.company && (
-													<Badge variant="outline" className="shrink-0">
-														{project.company}
-													</Badge>
-												)}
-											</div>
-											<p className="text-sm text-muted-foreground line-clamp-2">
-												{project.description}
-											</p>
-										</div>
-									</CardHeader>
-									<CardContent className="space-y-4">
-										<div className="flex flex-wrap gap-2">
-											{project.technologies.slice(0, 5).map((tech) => (
-												<Badge
-													key={tech}
-													variant="secondary"
-													className="text-xs">
-													{tech}
-												</Badge>
-											))}
-											{project.technologies.length > 5 && (
-												<Badge variant="secondary" className="text-xs">
-													+{project.technologies.length - 5}
-												</Badge>
-											)}
-										</div>
-									</CardContent>
-									<CardFooter className="flex justify-between items-center pt-4 border-t">
-										<Badge
-											variant="outline"
-											className={
-												project.status === "live"
-													? "border-green-500 text-green-600"
-													: "border-blue-500 text-blue-600"
-											}>
-											{project.status}
-										</Badge>
-										<Button variant="ghost" size="sm" className="group/btn">
-											View Details
-											<ExternalLink className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
-										</Button>
-									</CardFooter>
-								</Card>
-							))}
-						</div>
-					</div>
-
-					{/* Category Filter */}
-					<div className="space-y-6">
-						<h3 className="text-2xl font-bold">All Projects</h3>
-						<Tabs
-							value={activeCategory}
-							onValueChange={(value) =>
-								setActiveCategory(value as typeof activeCategory)
-							}
-							className="w-full">
-							<TabsList className="w-full sm:w-auto">
-								{(
-									Object.keys(categoryLabels) as Array<
-										keyof typeof categoryLabels
-									>
-								).map((category) => (
-									<TabsTrigger key={category} value={category}>
-										{categoryLabels[category]}
-									</TabsTrigger>
-								))}
-							</TabsList>
-
-							<TabsContent value={activeCategory} className="mt-8">
-								<div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-									{filteredProjects.map((project) => (
-										<Card
-											key={project.id}
-											className="group overflow-hidden hover:shadow-lg transition-all cursor-pointer border-2 hover:border-primary/30"
-											onClick={() => setSelectedProject(project)}>
-											<div className="relative aspect-video overflow-hidden bg-muted">
-												<Image
-													src={project.image}
-													alt={project.title}
-													fill
-													className="object-cover group-hover:scale-105 transition-transform duration-300"
-												/>
-											</div>
-											<CardHeader className="space-y-2">
-												<div className="flex items-start justify-between gap-2">
-													<h3 className="font-bold line-clamp-1 group-hover:text-primary transition-colors">
-														{project.title}
-													</h3>
-													<Badge
-														variant="outline"
-														className={
-															project.status === "live"
-																? "border-green-500 text-green-600 shrink-0"
-																: "border-blue-500 text-blue-600 shrink-0"
-														}>
-														{project.status}
-													</Badge>
-												</div>
-												<p className="text-sm text-muted-foreground line-clamp-2">
+												</CardItem>
+												<CardItem
+													as="p"
+													translateZ="60"
+													className="text-sm text-muted-foreground mt-2 w-full line-clamp-2">
 													{project.description}
-												</p>
-											</CardHeader>
-											<CardContent>
-												<div className="flex flex-wrap gap-1.5">
-													{project.technologies
-														.slice(0, 4)
-														.map((tech) => (
+												</CardItem>
+												<CardItem translateZ="100" className="w-full mt-4">
+													<div className="relative aspect-video overflow-hidden rounded-xl bg-muted">
+														<Image
+															src={project.image}
+															alt={project.title}
+															fill
+															className="object-cover group-hover/card:scale-110 transition-transform duration-500"
+														/>
+														<div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-300" />
+													</div>
+												</CardItem>
+												<div className="flex flex-col gap-4 mt-6 w-full">
+													<CardItem
+														translateZ="60"
+														className="flex flex-wrap gap-2 w-full">
+														{project.technologies
+															.slice(0, 5)
+															.map((tech) => (
+																<Badge
+																	key={tech}
+																	variant="secondary"
+																	className="text-xs">
+																	{tech}
+																</Badge>
+															))}
+														{project.technologies.length > 5 && (
 															<Badge
-																key={tech}
 																variant="secondary"
 																className="text-xs">
-																{tech}
+																+{project.technologies.length - 5}
 															</Badge>
-														))}
-													{project.technologies.length > 4 && (
+														)}
+													</CardItem>
+													<CardItem
+														translateZ="80"
+														className="flex justify-between items-center w-full pt-4 border-t">
 														<Badge
-															variant="secondary"
-															className="text-xs">
-															+{project.technologies.length - 4}
+															variant="outline"
+															className={
+																project.status === "live"
+																	? "border-green-500 text-green-600"
+																	: "border-blue-500 text-blue-600"
+															}>
+															{project.status}
 														</Badge>
-													)}
+														<Button
+															variant="ghost"
+															size="sm"
+															className="group/btn"
+															onClick={() =>
+																setSelectedProject(project)
+															}>
+															View Details
+															<ExternalLink className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
+														</Button>
+													</CardItem>
 												</div>
-											</CardContent>
-										</Card>
+											</CardBody>
+										</CardContainer>
+									</motion.div>
+								))}
+							</div>
+						</motion.div>
+
+						{/* Category Filter */}
+						<motion.div
+							variants={fadeInUp}
+							initial="hidden"
+							whileInView="visible"
+							viewport={{ once: true, margin: "-50px" }}
+							className="space-y-6">
+							<h3 className="text-2xl font-bold">All Projects</h3>
+							<Tabs
+								value={activeCategory}
+								onValueChange={(value) =>
+									setActiveCategory(value as typeof activeCategory)
+								}
+								className="w-full">
+								<TabsList className="w-full sm:w-auto grid grid-cols-2 sm:grid-cols-4">
+									{(
+										Object.keys(categoryLabels) as Array<
+											keyof typeof categoryLabels
+										>
+									).map((category) => (
+										<TabsTrigger
+											key={category}
+											value={category}
+											className="relative">
+											{categoryLabels[category]}
+											{category === activeCategory && (
+												<motion.div
+													layoutId="activeTab"
+													className="absolute inset-0 bg-primary/10 rounded-md -z-10"
+													transition={{
+														type: "spring",
+														bounce: 0.2,
+														duration: 0.6,
+													}}
+												/>
+											)}
+										</TabsTrigger>
 									))}
-								</div>
+								</TabsList>
 
-								{/* Project Count */}
-								<div className="text-center pt-8">
-									<p className="text-sm text-muted-foreground">
-										Showing {filteredProjects.length} project
-										{filteredProjects.length === 1 ? "" : "s"}
-									</p>
-								</div>
-							</TabsContent>
-						</Tabs>
-					</div>
+								<AnimatePresence mode="wait">
+									<TabsContent
+										key={activeCategory}
+										value={activeCategory}
+										className="mt-8">
+										<motion.div
+											initial={{ opacity: 0, y: 20 }}
+											animate={{ opacity: 1, y: 0 }}
+											exit={{ opacity: 0, y: -20 }}
+											transition={{ duration: 0.3 }}
+											className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+											{filteredProjects.map((project, index) => (
+												<motion.div
+													key={project.id}
+													initial={{ opacity: 0, scale: 0.9 }}
+													animate={{ opacity: 1, scale: 1 }}
+													transition={{
+														delay: index * 0.1,
+														duration: 0.3,
+													}}
+													className="h-full">
+													<CardContainer className="py-0 h-full">
+														<CardBody className="relative group/card w-full h-full rounded-xl p-4 border border-border hover:border-primary/50 bg-card transition-all duration-300">
+															<CardItem
+																translateZ="100"
+																className="w-full">
+																<div className="relative aspect-video overflow-hidden rounded-lg bg-muted">
+																	<Image
+																		src={project.image}
+																		alt={project.title}
+																		fill
+																		className="object-cover group-hover/card:scale-110 transition-transform duration-500"
+																	/>
+																</div>
+															</CardItem>
+															<div className="flex flex-col gap-3 mt-4 w-full">
+																<div className="flex items-start justify-between gap-2">
+																	<CardItem
+																		translateZ="50"
+																		className="font-bold line-clamp-1 group-hover/card:text-primary transition-colors text-base">
+																		{project.title}
+																	</CardItem>
+																	<CardItem translateZ="60">
+																		<Badge
+																			variant="outline"
+																			className={
+																				project.status ===
+																				"live"
+																					? "border-green-500 text-green-600 shrink-0"
+																					: "border-blue-500 text-blue-600 shrink-0"
+																			}>
+																			{project.status}
+																		</Badge>
+																	</CardItem>
+																</div>
+																<CardItem
+																	as="p"
+																	translateZ="60"
+																	className="text-sm text-muted-foreground line-clamp-2 w-full">
+																	{project.description}
+																</CardItem>
+																<CardItem
+																	translateZ="40"
+																	className="flex flex-wrap gap-1.5 w-full">
+																	{project.technologies
+																		.slice(0, 4)
+																		.map((tech) => (
+																			<Badge
+																				key={tech}
+																				variant="secondary"
+																				className="text-xs">
+																				{tech}
+																			</Badge>
+																		))}
+																	{project.technologies.length >
+																		4 && (
+																		<Badge
+																			variant="secondary"
+																			className="text-xs">
+																			+
+																			{project.technologies
+																				.length - 4}
+																		</Badge>
+																	)}
+																</CardItem>
+																<CardItem
+																	translateZ="80"
+																	className="w-full pt-2">
+																	<Button
+																		variant="outline"
+																		size="sm"
+																		className="w-full group/btn"
+																		onClick={() =>
+																			setSelectedProject(
+																				project,
+																			)
+																		}>
+																		View Details
+																		<ExternalLink className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
+																	</Button>
+																</CardItem>
+															</div>
+														</CardBody>
+													</CardContainer>
+												</motion.div>
+											))}
+										</motion.div>
 
-					{/* Stats */}
-					<div className="grid sm:grid-cols-3 gap-6 max-w-3xl mx-auto pt-8">
-						<Card className="text-center">
-							<CardContent className="p-6">
-								<p className="text-3xl font-bold text-primary mb-2">11</p>
-								<p className="text-sm text-muted-foreground">Total Projects</p>
-							</CardContent>
-						</Card>
-						<Card className="text-center">
-							<CardContent className="p-6">
-								<p className="text-3xl font-bold text-primary mb-2">
-									{getProjectsByCategory("professional").length}
-								</p>
-								<p className="text-sm text-muted-foreground">
-									Professional Projects
-								</p>
-							</CardContent>
-						</Card>
-						<Card className="text-center">
-							<CardContent className="p-6">
-								<p className="text-3xl font-bold text-primary mb-2">
-									{featuredProjects.length}
-								</p>
-								<p className="text-sm text-muted-foreground">Featured Work</p>
-							</CardContent>
-						</Card>
-					</div>
+										{/* Project Count */}
+										<div className="text-center pt-8">
+											<p className="text-sm text-muted-foreground">
+												Showing {filteredProjects.length} project
+												{filteredProjects.length === 1 ? "" : "s"}
+											</p>
+										</div>
+									</TabsContent>
+								</AnimatePresence>
+							</Tabs>
+						</motion.div>
+
+						{/* Stats */}
+						<motion.div
+							variants={staggerContainer}
+							initial="hidden"
+							whileInView="visible"
+							viewport={{ once: true, margin: "-50px" }}
+							className="grid sm:grid-cols-3 gap-6 max-w-3xl mx-auto pt-8">
+							{[
+								{ value: "11", label: "Total Projects" },
+								{
+									value: getProjectsByCategory("professional").length.toString(),
+									label: "Professional Projects",
+								},
+								{
+									value: featuredProjects.length.toString(),
+									label: "Featured Work",
+								},
+							].map((stat) => (
+								<motion.div
+									key={stat.label}
+									variants={scaleIn}
+									whileHover={{ y: -5, scale: 1.05 }}>
+									<Card className="text-center hover:border-primary/30 transition-colors">
+										<CardContent className="p-6">
+											<p className="text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r from-primary to-primary/60 mb-2">
+												{stat.value}
+											</p>
+											<p className="text-sm text-muted-foreground">
+												{stat.label}
+											</p>
+										</CardContent>
+									</Card>
+								</motion.div>
+							))}
+						</motion.div>
+					</motion.div>
 				</div>
-			</div>
+			</section>
 
 			{/* Project Detail Dialog */}
 			<Dialog open={!!selectedProject} onOpenChange={() => setSelectedProject(null)}>
@@ -392,6 +501,6 @@ export function Projects() {
 					)}
 				</DialogContent>
 			</Dialog>
-		</section>
+		</>
 	);
 }

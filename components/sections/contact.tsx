@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Mail, MapPin, Send, ArrowRight, Loader2 } from "lucide-react";
+import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { contactInfo, getSocialLinks } from "@/lib/data/personal-info";
+import { fadeInUp, fadeInLeft, fadeInRight, staggerContainer, scaleIn } from "@/lib/animations";
 
 export function Contact() {
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -95,115 +97,158 @@ export function Contact() {
 	};
 
 	return (
-		<section id="contact" className="py-20 md:py-32 bg-muted/30">
-			<div className="container mx-auto px-4 sm:px-6 lg:px-8">
-				<div className="max-w-5xl mx-auto space-y-12">
+		<section id="contact" className="py-20 md:py-32 bg-muted/30 relative overflow-hidden">
+			{/* Background Pattern */}
+			<div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[24px_24px] mask-[radial-gradient(ellipse_80%_50%_at_50%_100%,#000_70%,transparent_110%)]" />
+
+			<div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+				<motion.div
+					variants={staggerContainer}
+					initial="hidden"
+					whileInView="visible"
+					viewport={{ once: true, margin: "-100px" }}
+					className="max-w-5xl mx-auto space-y-12">
 					{/* Section Header */}
-					<div className="text-center space-y-4">
-						<h2 className="text-3xl sm:text-4xl md:text-5xl font-bold">Get In Touch</h2>
+					<motion.div variants={fadeInUp} className="text-center space-y-4">
+						<h2 className="text-3xl sm:text-4xl md:text-5xl font-bold">
+							<span className="bg-linear-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
+								Get In Touch
+							</span>
+						</h2>
 						<p className="text-lg text-muted-foreground max-w-2xl mx-auto">
 							Have a project in mind or want to collaborate? Feel free to reach out.
 						</p>
-					</div>
+					</motion.div>
 
 					<div className="grid lg:grid-cols-3 gap-8">
 						{/* Contact Info */}
-						<div className="lg:col-span-1 space-y-6">
+						<motion.div variants={fadeInLeft} className="lg:col-span-1 space-y-6">
 							<div>
 								<h3 className="text-xl font-semibold mb-6">Contact Information</h3>
-								<div className="space-y-4">
-									<Card>
-										<CardContent className="p-4">
-											<div className="flex items-start gap-3">
-												<Mail className="h-5 w-5 text-primary mt-0.5 shrink-0" />
-												<div className="space-y-1">
-													<p className="text-sm font-medium">Email</p>
-													<a
-														href={`mailto:${contactInfo.email}`}
-														className="text-sm text-muted-foreground hover:text-primary transition-colors break-all">
-														{contactInfo.email}
-													</a>
+								<motion.div
+									variants={staggerContainer}
+									initial="hidden"
+									whileInView="visible"
+									viewport={{ once: true }}
+									className="space-y-4">
+									<motion.div
+										variants={scaleIn}
+										whileHover={{ scale: 1.03, y: -2 }}>
+										<Card className="hover:shadow-lg transition-all hover:border-primary/50 border-2">
+											<CardContent className="p-4">
+												<div className="flex items-start gap-3">
+													<Mail className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+													<div className="space-y-1">
+														<p className="text-sm font-medium">Email</p>
+														<a
+															href={`mailto:${contactInfo.email}`}
+															className="text-sm text-muted-foreground hover:text-primary transition-colors break-all">
+															{contactInfo.email}
+														</a>
+													</div>
 												</div>
-											</div>
-										</CardContent>
-									</Card>
+											</CardContent>
+										</Card>
+									</motion.div>
 
-									<Card>
-										<CardContent className="p-4">
-											<div className="flex items-start gap-3">
-												<MapPin className="h-5 w-5 text-primary mt-0.5 shrink-0" />
-												<div className="space-y-1">
-													<p className="text-sm font-medium">Location</p>
-													<p className="text-sm text-muted-foreground">
-														{contactInfo.location}
-													</p>
-													<p className="text-xs text-muted-foreground">
-														{contactInfo.timezone}
-													</p>
+									<motion.div
+										variants={scaleIn}
+										whileHover={{ scale: 1.03, y: -2 }}>
+										<Card className="hover:shadow-lg transition-all hover:border-primary/50 border-2">
+											<CardContent className="p-4">
+												<div className="flex items-start gap-3">
+													<MapPin className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+													<div className="space-y-1">
+														<p className="text-sm font-medium">
+															Location
+														</p>
+														<p className="text-sm text-muted-foreground">
+															{contactInfo.location}
+														</p>
+														<p className="text-xs text-muted-foreground">
+															{contactInfo.timezone}
+														</p>
+													</div>
 												</div>
-											</div>
-										</CardContent>
-									</Card>
-								</div>
+											</CardContent>
+										</Card>
+									</motion.div>
+								</motion.div>
 							</div>
 
 							{/* Social Links */}
-							<div>
+							<motion.div variants={fadeInUp}>
 								<h3 className="text-lg font-semibold mb-4">Connect</h3>
-								<div className="space-y-3">
+								<motion.div
+									variants={staggerContainer}
+									initial="hidden"
+									whileInView="visible"
+									viewport={{ once: true }}
+									className="space-y-3">
 									{socialLinks.github && (
-										<Button
-											variant="outline"
-											className="w-full justify-start"
-											asChild>
-											<Link
-												href={socialLinks.github}
-												target="_blank"
-												rel="noopener noreferrer">
-												<ArrowRight className="mr-2 h-4 w-4" />
-												GitHub
-											</Link>
-										</Button>
+										<motion.div variants={scaleIn} whileHover={{ x: 5 }}>
+											<Button
+												variant="outline"
+												className="w-full justify-start group hover:border-primary/50"
+												asChild>
+												<Link
+													href={socialLinks.github}
+													target="_blank"
+													rel="noopener noreferrer">
+													<ArrowRight className="mr-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+													GitHub
+												</Link>
+											</Button>
+										</motion.div>
 									)}
 									{socialLinks.linkedin && (
-										<Button
-											variant="outline"
-											className="w-full justify-start"
-											asChild>
-											<Link
-												href={socialLinks.linkedin}
-												target="_blank"
-												rel="noopener noreferrer">
-												<ArrowRight className="mr-2 h-4 w-4" />
-												LinkedIn
-											</Link>
-										</Button>
+										<motion.div variants={scaleIn} whileHover={{ x: 5 }}>
+											<Button
+												variant="outline"
+												className="w-full justify-start group hover:border-primary/50"
+												asChild>
+												<Link
+													href={socialLinks.linkedin}
+													target="_blank"
+													rel="noopener noreferrer">
+													<ArrowRight className="mr-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+													LinkedIn
+												</Link>
+											</Button>
+										</motion.div>
 									)}
 									{socialLinks.twitter && (
-										<Button
-											variant="outline"
-											className="w-full justify-start"
-											asChild>
-											<Link
-												href={socialLinks.twitter}
-												target="_blank"
-												rel="noopener noreferrer">
-												<ArrowRight className="mr-2 h-4 w-4" />
-												Twitter
-											</Link>
-										</Button>
+										<motion.div variants={scaleIn} whileHover={{ x: 5 }}>
+											<Button
+												variant="outline"
+												className="w-full justify-start group hover:border-primary/50"
+												asChild>
+												<Link
+													href={socialLinks.twitter}
+													target="_blank"
+													rel="noopener noreferrer">
+													<ArrowRight className="mr-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+													Twitter
+												</Link>
+											</Button>
+										</motion.div>
 									)}
-								</div>
-							</div>
-						</div>
+								</motion.div>
+							</motion.div>
+						</motion.div>
 
 						{/* Contact Form */}
-						<div className="lg:col-span-2">
-							<Card>
+						<motion.div variants={fadeInRight} className="lg:col-span-2">
+							<Card className="hover:shadow-lg transition-all border-2">
 								<CardContent className="p-6 sm:p-8">
 									<form onSubmit={handleSubmit} className="space-y-6">
 										{/* Name */}
-										<div className="space-y-2">
+										<motion.div
+											initial={{ opacity: 0, y: 20 }}
+											whileInView={{ opacity: 1, y: 0 }}
+											viewport={{ once: true }}
+											transition={{ delay: 0.1 }}
+											className="space-y-2">
 											<Label htmlFor="name">
 												Name <span className="text-destructive">*</span>
 											</Label>
@@ -216,14 +261,22 @@ export function Contact() {
 												className={errors.name ? "border-destructive" : ""}
 											/>
 											{errors.name && (
-												<p className="text-sm text-destructive">
+												<motion.p
+													initial={{ opacity: 0, y: -10 }}
+													animate={{ opacity: 1, y: 0 }}
+													className="text-sm text-destructive">
 													{errors.name}
-												</p>
+												</motion.p>
 											)}
-										</div>
+										</motion.div>
 
 										{/* Email */}
-										<div className="space-y-2">
+										<motion.div
+											initial={{ opacity: 0, y: 20 }}
+											whileInView={{ opacity: 1, y: 0 }}
+											viewport={{ once: true }}
+											transition={{ delay: 0.2 }}
+											className="space-y-2">
 											<Label htmlFor="email">
 												Email <span className="text-destructive">*</span>
 											</Label>
@@ -237,14 +290,22 @@ export function Contact() {
 												className={errors.email ? "border-destructive" : ""}
 											/>
 											{errors.email && (
-												<p className="text-sm text-destructive">
+												<motion.p
+													initial={{ opacity: 0, y: -10 }}
+													animate={{ opacity: 1, y: 0 }}
+													className="text-sm text-destructive">
 													{errors.email}
-												</p>
+												</motion.p>
 											)}
-										</div>
+										</motion.div>
 
 										{/* Subject */}
-										<div className="space-y-2">
+										<motion.div
+											initial={{ opacity: 0, y: 20 }}
+											whileInView={{ opacity: 1, y: 0 }}
+											viewport={{ once: true }}
+											transition={{ delay: 0.3 }}
+											className="space-y-2">
 											<Label htmlFor="subject">
 												Subject <span className="text-destructive">*</span>
 											</Label>
@@ -259,14 +320,22 @@ export function Contact() {
 												}
 											/>
 											{errors.subject && (
-												<p className="text-sm text-destructive">
+												<motion.p
+													initial={{ opacity: 0, y: -10 }}
+													animate={{ opacity: 1, y: 0 }}
+													className="text-sm text-destructive">
 													{errors.subject}
-												</p>
+												</motion.p>
 											)}
-										</div>
+										</motion.div>
 
 										{/* Message */}
-										<div className="space-y-2">
+										<motion.div
+											initial={{ opacity: 0, y: 20 }}
+											whileInView={{ opacity: 1, y: 0 }}
+											viewport={{ once: true }}
+											transition={{ delay: 0.4 }}
+											className="space-y-2">
 											<Label htmlFor="message">
 												Message <span className="text-destructive">*</span>
 											</Label>
@@ -282,41 +351,50 @@ export function Contact() {
 												}
 											/>
 											{errors.message && (
-												<p className="text-sm text-destructive">
+												<motion.p
+													initial={{ opacity: 0, y: -10 }}
+													animate={{ opacity: 1, y: 0 }}
+													className="text-sm text-destructive">
 													{errors.message}
-												</p>
+												</motion.p>
 											)}
-										</div>
+										</motion.div>
 
 										{/* Submit Button */}
-										<Button
-											type="submit"
-											disabled={isSubmitting}
-											className="w-full sm:w-auto"
-											size="lg">
-											{isSubmitting ? (
-												<>
-													<Loader2 className="mr-2 h-4 w-4 animate-spin" />
-													Sending...
-												</>
-											) : (
-												<>
-													<Send className="mr-2 h-4 w-4" />
-													Send Message
-												</>
-											)}
-										</Button>
+										<motion.div
+											initial={{ opacity: 0, y: 20 }}
+											whileInView={{ opacity: 1, y: 0 }}
+											viewport={{ once: true }}
+											transition={{ delay: 0.5 }}>
+											<Button
+												type="submit"
+												disabled={isSubmitting}
+												className="w-full sm:w-auto group"
+												size="lg">
+												{isSubmitting ? (
+													<>
+														<Loader2 className="mr-2 h-4 w-4 animate-spin" />
+														Sending...
+													</>
+												) : (
+													<>
+														<Send className="mr-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+														Send Message
+													</>
+												)}
+											</Button>
 
-										<p className="text-xs text-muted-foreground">
-											By submitting this form, you agree to be contacted
-											regarding your inquiry.
-										</p>
+											<p className="text-xs text-muted-foreground mt-4">
+												By submitting this form, you agree to be contacted
+												regarding your inquiry.
+											</p>
+										</motion.div>
 									</form>
 								</CardContent>
 							</Card>
-						</div>
+						</motion.div>
 					</div>
-				</div>
+				</motion.div>
 			</div>
 		</section>
 	);

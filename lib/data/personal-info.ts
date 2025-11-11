@@ -23,7 +23,7 @@ export const personalInfo: PersonalInfo = {
 	location: "Cape Town, Western Cape, South Africa",
 	email: "mpotulo28@gmail.com",
 	social: socialLinks,
-	image: "/images/profile/manelisi-mpotulo.jpg",
+	image: "/images/favicon-192x192.png",
 };
 
 // ========================================
