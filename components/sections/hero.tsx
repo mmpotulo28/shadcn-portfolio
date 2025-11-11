@@ -198,7 +198,6 @@ export function Hero() {
 						</motion.div>
 					</motion.div>
 
-					{/* Scroll Indicator */}
 					<motion.div variants={fadeInUp} className="pt-12">
 						<Link
 							href="#about"
