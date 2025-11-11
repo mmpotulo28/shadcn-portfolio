@@ -6,8 +6,8 @@ import type { PersonalInfo, SocialLinks } from "@/types";
 
 export const socialLinks: SocialLinks = {
 	github: "https://github.com/mmpotulo28",
-	linkedin: "https://linkedin.com/in/manelisi-mpotulo",
-	email: "mailto:mpotulo28@gmail.com",
+	linkedin: "https://linkedin.com/in/mmpotulo",
+	email: "mailto:mpotulom28@gmail.com",
 	twitter: "https://twitter.com/manelisi_m",
 };
 
@@ -17,11 +17,11 @@ export const socialLinks: SocialLinks = {
 
 export const personalInfo: PersonalInfo = {
 	name: "Manelisi Mpotulo",
-	title: "Full-Stack Software Developer",
-	tagline: "Building scalable web and mobile applications that make a difference",
-	bio: "Passionate software developer with expertise in full-stack development, specializing in React, TypeScript, and Spring Boot. Currently driving innovation at BETSoftware, where I architect enterprise solutions serving 100,000+ daily active users. With a strong foundation in both frontend and backend technologies, I excel at building performant, user-centric applications while solving complex technical challenges.",
-	location: "Cape Town, Western Cape, South Africa",
-	email: "mpotulo28@gmail.com",
+	title: "Software Developer",
+	tagline: "B.Eng Tech in Computer Engineering | Next.JS/React/Java/TypeScript",
+	bio: "Hi, I'm Manelisi Mpotulo, a versatile and ambitious Software Developer with a strong foundation in both front-end and back-end technologies. My expertise spans the Java Stack for robust server-side solutions, SQL for efficient data management, and modern front-end frameworks like Next.js, React, and TypeScript. Having recently completed my BET in Computer Engineering at CPUT, I'm well-equipped to design, develop, and deploy scalable applications that meet the demands of today's digital landscape. I'm passionate about leveraging technology to drive innovation and growth, and I'm excited to collaborate with forward-thinking teams to shape the future of tech.",
+	location: "22 Busira court, leiden, Delft, 7100, Cape Town",
+	email: "mpotulom28@gmail.com",
 	social: socialLinks,
 	image: "/images/favicon-192x192.png",
 };
@@ -32,28 +32,28 @@ export const personalInfo: PersonalInfo = {
 
 export const aboutHighlights = [
 	{
-		icon: "Target",
-		title: "Problem Solver",
+		icon: "Award",
+		title: "Award Winner",
 		description:
-			"Reduced critical app crashes by 95% and optimized dashboard queries from 3.5s to 400ms through systematic debugging and performance optimization.",
+			"2019 District's Top Achiever Award, Class of 2019's 2nd Place Top Achiever, and multiple hackathon victories including Blockchain Hackathon Winner.",
 	},
 	{
 		icon: "Rocket",
 		title: "Innovation Driven",
 		description:
-			"Successfully integrated complex SDKs (Xtremepush, AppsFlyer) supporting 100,000+ users while implementing Redis caching and automated workflows.",
+			"Experienced in modern tech stack including Quarkus, SpringBoot, and React Native, with proven ability to deliver scalable enterprise solutions.",
 	},
 	{
 		icon: "Users",
 		title: "Team Player",
 		description:
-			"Collaborate effectively with cross-functional teams in Agile environments, mentor junior developers, and contribute to engineering documentation.",
+			"Collaborate effectively across different roles from Software Engineering to coordination, with experience in both technical and leadership positions.",
 	},
 	{
 		icon: "TrendingUp",
-		title: "Impact Focused",
+		title: "Continuous Learner",
 		description:
-			"Delivered measurable results: 42% conversion increase, 88% latency reduction, and improved app ratings from 4.2 to 4.7 stars.",
+			"Constantly expanding skillset with certifications in React Native, CompTIA Network+, and modern development frameworks.",
 	},
 ];
 
@@ -81,9 +81,9 @@ export const coreCompetencies = [
 // ========================================
 
 export const contactInfo = {
-	email: "mpotulo28@gmail.com",
-	phone: "+27 XX XXX XXXX", // Update with actual number or remove
-	location: "Cape Town, Western Cape, South Africa",
+	email: "mpotulom28@gmail.com",
+	phone: "079 653 0453",
+	location: "22 Busira court, leiden, Delft, 7100, Cape Town",
 	timezone: "SAST (UTC+2)",
 	preferredContact: "email",
 };

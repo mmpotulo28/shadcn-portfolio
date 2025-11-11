@@ -27,6 +27,7 @@ export const skills: Skill[] = [
 
 	// Backend
 	{ name: "Spring Boot", category: "Backend", proficiency: "expert", icon: "Leaf" },
+	{ name: "Quarkus", category: "Backend", proficiency: "advanced", icon: "Zap" },
 	{ name: "Node.js", category: "Backend", proficiency: "advanced", icon: "Circle" },
 	{ name: "Express.js", category: "Backend", proficiency: "advanced", icon: "Zap" },
 	{ name: "Django", category: "Backend", proficiency: "intermediate", icon: "Music" },
@@ -40,6 +41,13 @@ export const skills: Skill[] = [
 
 	// Databases
 	{ name: "PostgreSQL", category: "Databases", proficiency: "expert", icon: "Database" },
+	{ name: "SQL Server", category: "Databases", proficiency: "advanced", icon: "Database" },
+	{
+		name: "SQL Server Management Studio",
+		category: "Databases",
+		proficiency: "advanced",
+		icon: "Settings",
+	},
 	{ name: "MySQL", category: "Databases", proficiency: "advanced", icon: "Database" },
 	{ name: "MongoDB", category: "Databases", proficiency: "advanced", icon: "Leaf" },
 	{ name: "Redis", category: "Databases", proficiency: "advanced", icon: "Circle" },
